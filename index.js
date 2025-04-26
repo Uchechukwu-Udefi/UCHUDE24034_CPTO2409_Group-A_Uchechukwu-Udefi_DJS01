@@ -16,7 +16,7 @@ const fuelBurnRateKgPerSecond = 0.5; // fuel burn rate (kg/s)
 // Pick up an error with how the function below is called and make it robust to such errors
 function calculateNewVelocity (accelerationMs2, velocityKmh, timeInSeconds) { 
 
-  // Check for unit consistency
+  // Validate inputes before calculations
   if (typeof velocityKmh !== "number" || typeof accelerationMs2 !== "number" || typeof timeInSeconds !== "number") {
       throw new Error("All inputs must be numbers.");
     }
@@ -26,16 +26,16 @@ function calculateNewVelocity (accelerationMs2, velocityKmh, timeInSeconds) {
 
   // Check for remaining fuel
     if (availableFuelKg < 0) {
-      throw new Error("Fuel depleted! Remaining fuel is negative.");
+      throw new Error("Warning: Fuel exhausted!");
     }
 
   // Convert current velocity from km/h to m/s
   const currentVelocityMs = velocityKmh * (1000 / 3600);
 
-  // New velocity in m/s after acceleration
+  // Calculate new velocity in m/s
   const newVelocityMs = currentVelocityMs + (accelerationMs2 * timeInSeconds);
 
-  // Convert the new velocity from m/s back to km/h
+  // Convert the velocity back to km/h
   const newVelocityKmh = newVelocityMs * (3600 / 1000)
 
   return newVelocityKmh
